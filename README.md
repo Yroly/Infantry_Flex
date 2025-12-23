@@ -1,6 +1,6 @@
 # AT INFANTRY
 
-![actor_thinker](docs/actor_thinker.png)
+![at](docs/at.png)
 =======
 RoboMaster Infantry Gimbal Based On Stm32F407
 
