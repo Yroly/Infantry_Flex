@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2024 STMicroelectronics.
+  * Copyright (c) 2025 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -108,8 +108,6 @@ extern USBD_CDC_ItfTypeDef USBD_Interface_fops_FS;
 uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
 
 /* USER CODE BEGIN EXPORTED_FUNCTIONS */
-extern uint8_t USB_Transmit(uint8_t* Buf, uint16_t Len);
-extern int8_t USB_Receive(uint8_t* Buf, uint32_t *Len);
 
 /* USER CODE END EXPORTED_FUNCTIONS */
 

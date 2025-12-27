@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2024 STMicroelectronics.
+  * Copyright (c) 2025 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -64,9 +64,7 @@ const osThreadAttr_t Init_Task_attributes = {
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
-void INS_Init();
-void INS_Task();
-void Init_Task();
+
 /* USER CODE END FunctionPrototypes */
 
 void StartINSTask(void *argument);
@@ -130,11 +128,9 @@ void StartINSTask(void *argument)
   /* init code for USB_DEVICE */
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN StartINSTask */
-INS_Init();
   /* Infinite loop */
   for(;;)
   {
-	  INS_Task();
     osDelay(1);
   }
   /* USER CODE END StartINSTask */
@@ -150,9 +146,11 @@ INS_Init();
 void StartInit_Task(void *argument)
 {
   /* USER CODE BEGIN StartInit_Task */
-	  MX_USB_DEVICE_Init();
-     Init_Task();
   /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
   /* USER CODE END StartInit_Task */
 }
 

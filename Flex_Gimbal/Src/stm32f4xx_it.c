@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2024 STMicroelectronics.
+  * Copyright (c) 2025 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -22,9 +22,6 @@
 #include "stm32f4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "Variate.h"
-#include "remote_control.h"
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -54,7 +51,7 @@
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-WatchDog_TypeDef Remote_Dog;
+
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -282,7 +279,6 @@ void USART1_IRQHandler(void)
   /* USER CODE END USART1_IRQn 0 */
   HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN USART1_IRQn 1 */
-	
 
   /* USER CODE END USART1_IRQn 1 */
 }
@@ -293,81 +289,11 @@ void USART1_IRQHandler(void)
 void USART3_IRQHandler(void)
 {
   /* USER CODE BEGIN USART3_IRQn 0 */
-    if(huart3.Instance->SR & UART_FLAG_RXNE)//������?�u
-    {
-        __HAL_UART_CLEAR_PEFLAG(&huart3);
-    }
-    else if(USART3->SR & UART_FLAG_IDLE)
-    {
-        static uint16_t this_time_rx_len = 0;
 
-        __HAL_UART_CLEAR_PEFLAG(&huart3);
-		Feed_Dog(&Remote_Dog);
-        if ((hdma_usart3_rx.Instance->CR & DMA_SxCR_CT) == RESET)
-        {
-            /* Current memory buffer used is Memory 0 */
-    
-            //disable DMA
-            //����DMA
-            __HAL_DMA_DISABLE(&hdma_usart3_rx);
-
-            //get receive data length, length = set_data_length - remain_length
-            //?������?�u?��,?�� = ?�w?�� - �ѧE?��
-            this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart3_rx.Instance->NDTR;
-
-            //reset set_data_lenght
-            //���s?�w?�u?��
-            hdma_usart3_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
-
-            //set memory buffer 1
-            //?�w???1
-            hdma_usart3_rx.Instance->CR |= DMA_SxCR_CT;
-            
-            //enable DMA
-            //�ϯ�DMA
-            __HAL_DMA_ENABLE(&hdma_usart3_rx);
-
-            if(this_time_rx_len == RC_FRAME_LENGTH)
-            {
-				Remote_Rx(sbus_rx_buf[0]);
-            }
-        }
-        else
-        {
-            /* Current memory buffer used is Memory 1 */
-            //disable DMA
-            //����DMA
-            __HAL_DMA_DISABLE(&hdma_usart3_rx);
-
-            //get receive data length, length = set_data_length - remain_length
-            //?������?�u?��,?�� = ?�w?�� - �ѧE?��
-            this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart3_rx.Instance->NDTR;
-
-            //reset set_data_lenght
-            //���s?�w?�u?��
-            hdma_usart3_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
-
-            //set memory buffer 0
-            //?�w???0
-            DMA1_Stream1->CR &= ~(DMA_SxCR_CT);
-            
-            //enable DMA
-            //�ϯ�DMA
-            __HAL_DMA_ENABLE(&hdma_usart3_rx);
-
-            if(this_time_rx_len == RC_FRAME_LENGTH)
-            {
-                //?�z?����?�u
-				Remote_Rx(sbus_rx_buf[1]);
-            }
-        }
-    }
-
-#if 0
   /* USER CODE END USART3_IRQn 0 */
   HAL_UART_IRQHandler(&huart3);
   /* USER CODE BEGIN USART3_IRQn 1 */
-#endif
+
   /* USER CODE END USART3_IRQn 1 */
 }
 
@@ -423,8 +349,7 @@ void DMA2_Stream7_IRQHandler(void)
   /* USER CODE END DMA2_Stream7_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_usart1_tx);
   /* USER CODE BEGIN DMA2_Stream7_IRQn 1 */
-	BaseType_t xHigherPriorityTaskWoken;
-	//printf("ooooooo\r\n");
+
   /* USER CODE END DMA2_Stream7_IRQn 1 */
 }
 

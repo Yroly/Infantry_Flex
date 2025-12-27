@@ -1,18 +1,24 @@
-# AT INFANTRY
+# AT  INFANTRY
 
 ![at](docs/at.png)
 =======
-RoboMaster Infantry Gimbal Based On Stm32F407
+​										|-- Gimbal Based On Stm32F407
+
+RoboMaster Infantry- |
+
+​										|--Chassis Based On Stm32H723
 
 ## 简介
 
-26赛季麦轮伸缩狗腿步兵云台代码 
+26赛季麦轮伸缩狗腿步兵云台&底盘代码 
 
 ### Development
 
 持续开发中
 
 ## 一些待完善的工作
+
+###### 云台
 
 - [x] 云台电机6020力控
 - [x] 优化与自瞄usb通信
@@ -23,7 +29,7 @@ RoboMaster Infantry Gimbal Based On Stm32F407
 - [x] 调整陀螺仪解算 解决自瞄情况下摩擦轮转动带来的高频震动引发的roll扰动
 - [ ] 进行cmake开发代码的编写
 
-
+###### 底盘
 
 航空线4路 云台供电线2 pc供电2  通信2 yaw 2    波胆盘2发射2
 

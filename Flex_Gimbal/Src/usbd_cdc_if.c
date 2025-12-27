@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2024 STMicroelectronics.
+  * Copyright (c) 2025 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -31,7 +31,6 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-#define MAX_RESEND_CNT 8192
 
 /* USER CODE END PV */
 
@@ -264,7 +263,6 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
   /* USER CODE BEGIN 6 */
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
-//  VCOMM_Receive_FS(Buf, Len);
   return (USBD_OK);
   /* USER CODE END 6 */
 }
@@ -318,21 +316,6 @@ static int8_t CDC_TransmitCplt_FS(uint8_t *Buf, uint32_t *Len, uint8_t epnum)
 }
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_IMPLEMENTATION */
-uint8_t USB_Transmit(uint8_t* Buf, uint16_t Len)
-{
-    uint16_t resend_cnt = 0;
-    uint8_t usb_send_state = USBD_FAIL;
-    while (usb_send_state != USBD_OK && resend_cnt < MAX_RESEND_CNT) {
-        usb_send_state = CDC_Transmit_FS(Buf, Len);
-        resend_cnt++;
-    }
-    return usb_send_state;
-}
-
-int8_t USB_Receive(uint8_t* Buf, uint32_t *Len)
-{
-    return CDC_Receive_FS(Buf,Len);
-}
 
 /* USER CODE END PRIVATE_FUNCTIONS_IMPLEMENTATION */
 

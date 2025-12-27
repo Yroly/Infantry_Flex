@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2024 STMicroelectronics.
+  * Copyright (c) 2025 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -30,11 +30,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "BMI088driver.h"
-#include "bsp_dwt.h"
-#include "stdio.h"
-#include "Gimbal.h"
-#include "Variate.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,8 +52,6 @@
 
 /* USER CODE BEGIN PV */
 
-extern TaskHandle_t Music_Task_handle;
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -69,12 +63,6 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-int fputc(int c,FILE *f){
-	uint8_t ch[1] = {c};
-	HAL_UART_Transmit(&huart1,ch,1,200);
-	return c;
-}
 
 /* USER CODE END 0 */
 
@@ -118,8 +106,7 @@ int main(void)
   MX_TIM4_Init();
   MX_RNG_Init();
   /* USER CODE BEGIN 2 */
-    DWT_Init(168);
-    while (BMI088Init(&hspi1, 1) != BMI088_NO_ERROR);	
+
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -193,7 +180,26 @@ void SystemClock_Config(void)
 
 /* USER CODE END 4 */
 
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM2 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
 
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM2) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.
