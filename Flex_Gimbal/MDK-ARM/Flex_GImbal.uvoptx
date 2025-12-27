@@ -17,7 +17,7 @@
 		<dwHighDateTime>0</dwHighDateTime>
 	</DaveTm>
 	<Target>
-		<TargetName>Flex_GImbal</TargetName>
+		<TargetName>Flex_Gimbal</TargetName>
 		<ToolsetNumber>0x4</ToolsetNumber>
 		<ToolsetName>ARM-ADS</ToolsetName>
 		<TargetOption>

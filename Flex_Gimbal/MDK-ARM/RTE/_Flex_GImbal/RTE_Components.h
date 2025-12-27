@@ -3,8 +3,8 @@
  * Auto generated Run-Time-Environment Configuration File
  *      *** Do not modify ! ***
  *
- * Project: 'Flex_GImbal' 
- * Target:  'Flex_GImbal' 
+ * Project: 'Flex_Gimbal' 
+ * Target:  'Flex_Gimbal' 
  */
 
 #ifndef RTE_COMPONENTS_H
