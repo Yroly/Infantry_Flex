@@ -78,4 +78,12 @@ at_infantry/plotter_task.o: ..\Infantry_ws\task\plotter_task.cpp \
   E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\limits.h \
   ..\Infantry_ws\task\chassis_task.h ..\Infantry_ws\agency\Chassis.h \
   E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\libcxx\cstdint \
-  E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\libcxx\cstring
+  E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\libcxx\cstring \
+  ..\Infantry_ws\task\remote_task.h \
+  ..\Infantry_ws\middlewares\io\sbus\sbus.h \
+  ..\Infantry_ws\middlewares\io\watchdog\watchdog.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\freertos.h \
+  ..\Infantry_ws\Algorithm\PID\pid.h \
+  ..\Infantry_ws\middlewares\motor\drv_dji_motor.h ..\Core\Inc\fdcan.h \
+  ..\Infantry_ws\bsp\bsp_can.h

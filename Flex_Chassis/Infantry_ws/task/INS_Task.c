@@ -1,5 +1,4 @@
 #include "INS_Task.h"
-#include "QuaternionEKF.h"
 #include "mahony_filter.h"
 #include "cmsis_os2.h"
 

@@ -3,7 +3,14 @@
 #include <cstdint>
 #include "fdcan.h"
 #include "bsp_can.h"
-
+/**
+* @brief 电机限幅结构体
+*/
+typedef struct{
+	int16_t M3508;
+	int16_t GM6020;
+	int16_t M2006;
+}Motorlim_t;
 enum class motor_err : uint8_t{
 	NO_ERR = 0,
 	UN_ACCESS = 1,
@@ -19,7 +26,7 @@ enum class motor_err : uint8_t{
  */
 typedef struct{
 	uint16_t mechangle;
-	int16_t rotatespeed;
+	int16_t rotatespd;
 	int16_t current;
 	uint8_t temp;
 	motor_err err;
@@ -42,14 +49,18 @@ typedef struct{
 		float cc;               //!<@brief 转矩电流平方项系数
 		float constant;         //!<@brief 常量
 	} PowerCOF;               //!<@brief 计算功率所用的系数,由MATLAB拟合
-}RM3508_TypeDef;
+}M3508_t;
 
 class RM_Motor_Class{
 public:
-	RM3508_TypeDef motor[4];
-      // 根据CAN ID获取对应电机的measure指针
+	M3508_t motor[4];
+	Motorlim_t lim = {
+		.M3508 = 16384,
+		.GM6020 = 16384,
+		.M2006 = 16384
+	};
 	void motor_read(DjiMotor_t *motor,uint8_t *data);
-	void motor_ctrl(hfdcan_t *hfdcan,uint16_t id,int16_t motorl,int16_t motorr);
+	void motor_ctrl(FDCAN_HandleTypeDef *hfdcan,uint16_t id,int16_t *Data);
 private:
 };
 

@@ -60,4 +60,18 @@ at_infantry/bsp_can.o: ..\Infantry_ws\bsp\bsp_can.cpp \
   E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\libcxx\cstring \
   E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\libcxx\string.h \
   E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\string.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h
+  ..\Infantry_ws\task\remote_task.h \
+  ..\Infantry_ws\middlewares\io\sbus\sbus.h ..\Core\Inc\usart.h \
+  ..\Infantry_ws\middlewares\io\watchdog\watchdog.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h \
+  ..\Core\Inc\FreeRTOSConfig.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\projdefs.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\portable.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\deprecated_definitions.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM4F\portmacro.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\freertos.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h \
+  ..\Infantry_ws\Algorithm\PID\pid.h
