@@ -65,7 +65,7 @@ public:
 	float Mouse_ch[3] = {0};
 	void init(UART_HandleTypeDef * huart, bool use_dma);
 	void request();
-	void sbus_to_rc(uint16_t size, uint32_t stamp_ms);
+	void sbus_to_rc();
 	void RemoteClear();
 	/* 3个遥控器数据处理函数 */
 	void RemoteControlProcess(Remote *rc);

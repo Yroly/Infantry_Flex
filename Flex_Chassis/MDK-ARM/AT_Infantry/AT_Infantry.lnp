@@ -10,6 +10,7 @@
 "at_infantry\bmi088middleware.o"
 "at_infantry\bmi088driver.o"
 "at_infantry\drv_dji_motor.o"
+"at_infantry\dvc_unitree.o"
 "at_infantry\pid.o"
 "at_infantry\mahony_filter.o"
 "at_infantry\buzzer.o"

@@ -67,4 +67,23 @@ at_infantry/watchdog.o: \
   ..\Infantry_ws\middlewares\io\watchdog\watchdog.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\freertos.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h \
+  ..\Infantry_ws\Algorithm\PID\pid.h ..\Infantry_ws\agency\Chassis.h \
+  E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\libcxx\cstdint \
+  E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\libcxx\cstring \
+  E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\libcxx\string.h \
+  E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\string.h \
+  ..\Infantry_ws\middlewares\motor\drv_dji_motor.h ..\Core\Inc\fdcan.h \
+  ..\Infantry_ws\bsp\bsp_can.h \
+  ..\Infantry_ws\devices\unitree\dvc_unitree.h \
+  E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\libcxx\cstdlib \
+  ..\Infantry_ws\task\INS_Task.h \
+  ..\Infantry_ws\devices\BMI088\BMI088driver.h \
+  ..\Infantry_ws\Algorithm\EKF\QuaternionEKF.h \
+  ..\Infantry_ws\Algorithm\kalman\kalman_filter.h \
+  ..\Middlewares\ST\ARM\DSP\Inc\arm_math.h \
+  ..\Drivers\CMSIS\Include\cmsis_compiler.h \
+  E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\libcxx\float.h \
+  E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\float.h \
+  E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\libcxx\limits.h \
+  E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\limits.h

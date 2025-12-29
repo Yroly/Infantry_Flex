@@ -2,8 +2,6 @@
 
 PID_Class PID;
 
-
-
 void PID_Class::Init(PidTypeDef *pid,fp32 Kp,fp32 Ki,fp32 Kd,fp32 Kf,fp32 max){
 	if (pid == NULL){
 			return;
@@ -29,6 +27,7 @@ fp32 PID_Class::Calc(PidTypeDef *pid, fp32 measure,fp32 target){
 	pid->error[0] = target - measure;
 	pid->P_out = pid->Kp * pid->error[0];
 	pid->I_out += pid->Ki * pid->error[0];
+	limitmax(pid->I_out,pid->max);
 	pid->Dbuf[2] = pid->Dbuf[1];
 	pid->Dbuf[1] = pid->Dbuf[0];
 	pid->Dbuf[0] = (pid->error[0] - pid->error[1]);

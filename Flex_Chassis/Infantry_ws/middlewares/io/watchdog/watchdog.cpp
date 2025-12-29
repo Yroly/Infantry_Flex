@@ -1,5 +1,8 @@
 #include "WatchDog.h"
 #include "remote_task.h"
+#include "pid.h"
+#include "Chassis.h"
+
 WatchDog dog;
 
 static WatchDogP List[WatchDoglength];
@@ -27,11 +30,9 @@ void WatchDog::polling(){
 	}
 	osDelay(15);
 }
-void WatchDog::init(WatchDogP handle, uint32_t max,uint16_t life) {
-	if (Len >= WatchDoglength)
-			return;
-	handle->Max = max;
-	handle->ID  = Len + 1;
+void WatchDog::init(WatchDogP handle,uint32_t life) {
+	if (Len >= WatchDoglength) return;
+	handle->Max = life;
 	List[Len++] = handle;
 }
 void WatchDog::feed(WatchDogP handle) {
@@ -39,20 +40,83 @@ void WatchDog::feed(WatchDogP handle) {
 	FeedBack(handle);
 }
 void WatchDog::FeedBack(WatchDogP handle){
-  switch (handle->ID){
-		case 1:
-			if(REMOTE_IfDataError() == osError){
-				Remote_Dog.State = Device_Error;
-			} else {
-				Remote_Dog.State = Device_Online;
-			}
-		break;
-  }
+	if(IS_Dog(handle,Remote_Dog)){
+		if(REMOTE_IfDataError() == osError){
+			Remote_Dog.State = Device_Error;
+		} else {
+			Remote_Dog.State = Device_Online;
+		}		
+	}
+	if(IS_Dog(handle,Chassis_Dog[0])){
+		if(Chassis_Dog[0].State == Device_Error) {
+			PID.Init(&Chassis.chassis_pid.motor[0],5,0,0,0,0);
+		}else{
+			 Chassis_Dog[0].State = Device_Online;
+		}
+	}
+	if(IS_Dog(handle,Chassis_Dog[1])){
+		if(Chassis_Dog[1].State == Device_Error) {
+			PID.Init(&Chassis.chassis_pid.motor[1],5,0,0,0,0);
+		}else{
+			 Chassis_Dog[1].State = Device_Online;
+		}
+	}
+	if(IS_Dog(handle,dog.Chassis_Dog[2])){
+		if(Chassis_Dog[2].State == Device_Error) {
+			PID.Init(&Chassis.chassis_pid.motor[2],5,0,0,0,0);
+		}else{
+			 Chassis_Dog[2].State = Device_Online;
+		}
+	}
+	if(IS_Dog(handle,Chassis_Dog[3])){
+		if(Chassis_Dog[3].State == Device_Error) {
+			PID.Init(&Chassis.chassis_pid.motor[3],5,0,0,0,0);
+		}else{
+			 Chassis_Dog[3].State = Device_Online;
+		}
+	}
+	if(IS_Dog(handle,Joint_Dog[0])){
+		if(Joint_Dog[0].State == Device_Error) {
+			Chassis.joint_init(&Unitree.cmd[0],1,0.38,0,6.05,2.00,0.19);
+		}else{
+			Joint_Dog[0].State = Device_Online;
+		}
+	}
+	if(IS_Dog(handle,Joint_Dog[1])){
+		if(Joint_Dog[1].State == Device_Error) {
+			Chassis.joint_init(&Unitree.cmd[1],2,-0.38,0,2.67,2.00,0.19);
+		}else{
+			Joint_Dog[1].State = Device_Online;
+		}
+	}
 }
 void WatchDog::WatchBack(WatchDogP handle){
-  switch (handle->ID){
-		case 1:
-      Remote_Dog.State = Device_Offline;
-    break;
-  }
+	if(IS_Dog(handle,Remote_Dog)){
+		Remote_Dog.State = Device_Error;
+	}
+	if(IS_Dog(handle,Chassis_Dog[0])){
+		PID.Init(&Chassis.chassis_pid.motor[0],0,0,0,0,0);
+		Chassis_Dog[0].State = Device_Error;
+	}
+	if(IS_Dog(handle,Chassis_Dog[1])){
+		PID.Init(&Chassis.chassis_pid.motor[1],0,0,0,0,0);
+		Chassis_Dog[1].State = Device_Error;
+	}
+	if(IS_Dog(handle,Chassis_Dog[2])){
+		PID.Init(&Chassis.chassis_pid.motor[2],0,0,0,0,0);
+		Chassis_Dog[2].State = Device_Error;
+	}
+	if(IS_Dog(handle,Chassis_Dog[3])){
+		PID.Init(&Chassis.chassis_pid.motor[3],0,0,0,0,0);
+		Chassis_Dog[3].State = Device_Error;
+	}
+	/*joint*/
+	if(IS_Dog(handle,dog.Joint_Dog[0])){
+		Chassis.joint_init(&Unitree.cmd[0] , 1, 0, 0, 0, 0, 0);
+		Joint_Dog[0].State = Device_Error;
+	}	
+	if(IS_Dog(handle,dog.Joint_Dog[1])){
+		Chassis.joint_init(&Unitree.cmd[1] , 2, 0, 0, 0, 0, 0);
+		Joint_Dog[1].State = Device_Error;
+	}
 }

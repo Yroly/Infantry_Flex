@@ -4,7 +4,9 @@
 #include "FreeRTOS.h"
 #include "cmsis_os2.h"
 
-#define WatchDoglength 1
+#define WatchDoglength 10
+#define IS_Dog(handle, Dog) ((handle) == &(Dog))
+
 typedef enum{
 	SYSTEM_STARTING = 0,
 	SYSTEM_RUNNING	= 1,
@@ -18,15 +20,16 @@ typedef struct{
 	DeviceState_e State;
 	uint32_t Life;  //!<@brief 当前离线计数
 	uint32_t Max;   //!<@brief 最大离线计数
-	uint8_t ID;     //!<@brief 看门狗ID	
-}WatchDog_TypeDef,*WatchDogP;
+ }WatchDog_TypeDef,*WatchDogP;
 
 class WatchDog
 {
 public:
 	WatchDog_TypeDef Remote_Dog;
+	WatchDog_TypeDef Chassis_Dog[4];
+	WatchDog_TypeDef Joint_Dog[2];
 
-  void init(WatchDogP handle,uint32_t max,uint16_t life);
+  void init(WatchDogP handle,uint32_t life);
 	void WatchBack(WatchDogP handle);
   void FeedBack(WatchDogP handle);
 	void polling();

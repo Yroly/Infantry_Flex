@@ -34,7 +34,7 @@ void RC_Ctrl::RemoteClear(){
 	mouse.last_press_r = 0;
 	mouse.last_press_l = 0;
 }
-void RC_Ctrl::sbus_to_rc(uint16_t size, uint32_t stamp_ms){
+void RC_Ctrl::sbus_to_rc(){
 	has_read_ = true;
 	rc.ch[0] = ( sbus_buff_[0] | (sbus_buff_[1] << 8)) & 0x07ff;       //!< Channel 0
 	rc.ch[1] = ((sbus_buff_[1] >> 3) | (sbus_buff_[2] << 5)) & 0x07ff; //!< Channel 1

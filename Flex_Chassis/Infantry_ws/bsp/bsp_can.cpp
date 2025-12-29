@@ -34,10 +34,22 @@ extern "C" void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t 
       HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &RxHeader1, g_Can1RxData);
 			
 			switch(RxHeader1.Identifier){
-				case 0x201 : RM_Class.motor_read(&RM_Class.motor[0].measure,g_Can1RxData);break; 
-				case 0x202 : RM_Class.motor_read(&RM_Class.motor[1].measure,g_Can1RxData);break; 
-				case 0x203 : RM_Class.motor_read(&RM_Class.motor[2].measure,g_Can1RxData);break; 
-				case 0x204 : RM_Class.motor_read(&RM_Class.motor[3].measure,g_Can1RxData);break; 				
+				case 0x201 : 
+					RM_Class.motor_read(&RM_Class.motor[0].measure,g_Can1RxData);
+					dog.feed(&dog.Chassis_Dog[0]);
+				 break;
+				case 0x202 : 
+					RM_Class.motor_read(&RM_Class.motor[1].measure,g_Can1RxData);
+					dog.feed(&dog.Chassis_Dog[1]);
+				 break; 
+				case 0x203 : 
+					RM_Class.motor_read(&RM_Class.motor[2].measure,g_Can1RxData);
+				  dog.feed(&dog.Chassis_Dog[2]);
+				 break; 
+				case 0x204 : 
+					RM_Class.motor_read(&RM_Class.motor[3].measure,g_Can1RxData);
+					dog.feed(&dog.Chassis_Dog[3]);
+				 break; 				
 				default: break;
 			}
 	  }

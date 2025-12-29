@@ -55,7 +55,7 @@ class RM_Motor_Class{
 public:
 	M3508_t motor[4];
 	Motorlim_t lim = {
-		.M3508 = 16384,
+		.M3508 = 6000,
 		.GM6020 = 16384,
 		.M2006 = 16384
 	};

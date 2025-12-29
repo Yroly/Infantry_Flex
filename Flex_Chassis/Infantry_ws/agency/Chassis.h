@@ -4,10 +4,19 @@
 #include "remote_task.h"
 #include "pid.h"
 #include "drv_dji_motor.h"
+#include "dvc_unitree.h"
+#include "INS_Task.h"
+/*底盘运行状态*/
+#define CHASSIS_RUN 1
+//1 5.92  12.85
+//2 2.77  -3.90
+#define Joint_Left_Pos_Max (float)12.85  
+#define Joint_Left_Pos_Min (float)5.95   
+#define Joint_Right_Pos_Max (float)2.77  
+#define Joint_Right_Pos_Min (float)-3.90  
 /**
  * @brief 矢量速度结构体
  */
-#define CHASSIS_RUN 1
 typedef struct {
 	int16_t forward_back_ref;  //!<@brief 前进方向速度
 	int16_t left_right_ref;    //!<@brief 左右方向速度
@@ -29,6 +38,7 @@ typedef struct{
 	PidTypeDef motor[4];
 	PidTypeDef joint_pos[2];
 	PidTypeDef joint_Spd[2];
+	PidTypeDef pitch;
 }ChassisPid_t;
 enum class Chassis_Mode_e : uint8_t{
 	ChassisStop = 0,
@@ -46,6 +56,7 @@ public:
 	void speed_clean(ChassisSpeed_Ref_t *ref);
 	void speed_get(MotorSpeed_Ref_t *motor,ChassisSpeed_Ref_t *ref);
 	void init();
+	void joint_init(MotorCmd_t *cmd, unsigned short ID, float t, float w, float pos, float k_p, float k_w);
 	void decide();
 	void rc_ctrl();
 	void key_ctrl();

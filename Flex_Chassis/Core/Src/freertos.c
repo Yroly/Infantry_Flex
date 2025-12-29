@@ -52,7 +52,7 @@ osThreadId_t plottertaskHandle;
 const osThreadAttr_t plottertask_attributes = {
   .name = "plottertask",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
+  .priority = (osPriority_t) osPriorityLow,
 };
 /* Definitions for instask */
 osThreadId_t instaskHandle;
@@ -80,7 +80,7 @@ osThreadId_t remotetaskHandle;
 const osThreadAttr_t remotetask_attributes = {
   .name = "remotetask",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityLow,
+  .priority = (osPriority_t) osPriorityNormal,
 };
 
 /* Private function prototypes -----------------------------------------------*/
