@@ -22,6 +22,6 @@ extern "C" void Chassis_Task(){
 		}
 
 		
-		vTaskDelayUntil(&currentTime,2);
+		vTaskDelayUntil(&currentTime,3);
 	}
 }

@@ -65,4 +65,10 @@ at_infantry/remote_task.o: ..\Infantry_ws\task\remote_task.cpp \
   ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\freertos.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h
+  ..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h \
+  ..\Infantry_ws\devices\unitree\dvc_unitree.h \
+  E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\libcxx\cstdint \
+  E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\libcxx\cstring \
+  E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\libcxx\string.h \
+  E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\string.h \
+  E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\libcxx\cstdlib

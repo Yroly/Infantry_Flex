@@ -2,6 +2,8 @@
 #include "remote_task.h"
 #include "pid.h"
 #include "Chassis.h"
+#include "Joint.h"
+
 
 WatchDog dog;
 
@@ -77,14 +79,14 @@ void WatchDog::FeedBack(WatchDogP handle){
 	}
 	if(IS_Dog(handle,Joint_Dog[0])){
 		if(Joint_Dog[0].State == Device_Error) {
-			Chassis.joint_init(&Unitree.cmd[0],1,0.38,0,6.05,2.00,0.19);
+			Joint.init(&Unitree.cmd[0],1,0.38,0,6.05,2.00,0.19);
 		}else{
 			Joint_Dog[0].State = Device_Online;
 		}
 	}
 	if(IS_Dog(handle,Joint_Dog[1])){
 		if(Joint_Dog[1].State == Device_Error) {
-			Chassis.joint_init(&Unitree.cmd[1],2,-0.38,0,2.67,2.00,0.19);
+			Joint.init(&Unitree.cmd[1],2,-0.38,0,2.67,2.00,0.19);
 		}else{
 			Joint_Dog[1].State = Device_Online;
 		}
@@ -112,11 +114,11 @@ void WatchDog::WatchBack(WatchDogP handle){
 	}
 	/*joint*/
 	if(IS_Dog(handle,dog.Joint_Dog[0])){
-		Chassis.joint_init(&Unitree.cmd[0] , 1, 0, 0, 0, 0, 0);
+		Joint.init(&Unitree.cmd[0] , 1, 0, 0, 0, 0, 0);
 		Joint_Dog[0].State = Device_Error;
 	}	
 	if(IS_Dog(handle,dog.Joint_Dog[1])){
-		Chassis.joint_init(&Unitree.cmd[1] , 2, 0, 0, 0, 0, 0);
+		Joint.init(&Unitree.cmd[1] , 2, 0, 0, 0, 0, 0);
 		Joint_Dog[1].State = Device_Error;
 	}
 }

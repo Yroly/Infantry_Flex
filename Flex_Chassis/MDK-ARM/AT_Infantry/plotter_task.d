@@ -84,9 +84,8 @@ at_infantry/plotter_task.o: ..\Infantry_ws\task\plotter_task.cpp \
   ..\Infantry_ws\middlewares\io\watchdog\watchdog.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\freertos.h \
-  ..\Infantry_ws\Algorithm\PID\pid.h \
-  ..\Infantry_ws\middlewares\motor\drv_dji_motor.h ..\Core\Inc\fdcan.h \
-  ..\Infantry_ws\bsp\bsp_can.h \
   ..\Infantry_ws\devices\unitree\dvc_unitree.h \
   E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\libcxx\cstdlib \
-  ..\Infantry_ws\task\INS_Task.h
+  ..\Infantry_ws\Algorithm\PID\pid.h \
+  ..\Infantry_ws\middlewares\motor\drv_dji_motor.h ..\Core\Inc\fdcan.h \
+  ..\Infantry_ws\bsp\bsp_can.h ..\Infantry_ws\task\INS_Task.h

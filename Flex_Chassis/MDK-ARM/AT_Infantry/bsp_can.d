@@ -74,10 +74,9 @@ at_infantry/bsp_can.o: ..\Infantry_ws\bsp\bsp_can.cpp \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\freertos.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h \
-  ..\Infantry_ws\Algorithm\PID\pid.h \
   ..\Infantry_ws\devices\unitree\dvc_unitree.h \
   E:\Keil_V5\ARM\ARMCLANG\Bin\..\include\libcxx\cstdlib \
-  ..\Infantry_ws\task\INS_Task.h \
+  ..\Infantry_ws\Algorithm\PID\pid.h ..\Infantry_ws\task\INS_Task.h \
   ..\Infantry_ws\devices\BMI088\BMI088driver.h \
   ..\Infantry_ws\Algorithm\EKF\QuaternionEKF.h \
   ..\Infantry_ws\Algorithm\kalman\kalman_filter.h \

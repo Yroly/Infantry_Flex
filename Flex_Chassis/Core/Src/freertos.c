@@ -65,7 +65,7 @@ const osThreadAttr_t instask_attributes = {
 osThreadId_t chassistaskHandle;
 const osThreadAttr_t chassistask_attributes = {
   .name = "chassistask",
-  .stack_size = 1024 * 4,
+  .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for buzzertask */
@@ -82,6 +82,13 @@ const osThreadAttr_t remotetask_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for jointtask */
+osThreadId_t jointtaskHandle;
+const osThreadAttr_t jointtask_attributes = {
+  .name = "jointtask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -93,6 +100,7 @@ void INS_Task(void *argument);
 void Chassis_Task(void *argument);
 void Buzzer_Task(void *argument);
 void Remote_Task(void *argument);
+void Joint_Task(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -137,6 +145,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of remotetask */
   remotetaskHandle = osThreadNew(Remote_Task, NULL, &remotetask_attributes);
+
+  /* creation of jointtask */
+  jointtaskHandle = osThreadNew(Joint_Task, NULL, &jointtask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -236,6 +247,24 @@ __weak void Remote_Task(void *argument)
     osDelay(1);
   }
   /* USER CODE END Remote_Task */
+}
+
+/* USER CODE BEGIN Header_Joint_Task */
+/**
+* @brief Function implementing the jointtask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Joint_Task */
+__weak void Joint_Task(void *argument)
+{
+  /* USER CODE BEGIN Joint_Task */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END Joint_Task */
 }
 
 /* Private application code --------------------------------------------------*/

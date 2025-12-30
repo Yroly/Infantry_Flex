@@ -5,6 +5,7 @@
 "at_infantry\buzzer_task.o"
 "at_infantry\remote_task.o"
 "at_infantry\chassis.o"
+"at_infantry\joint.o"
 "at_infantry\bsp_dwt.o"
 "at_infantry\bsp_can.o"
 "at_infantry\bmi088middleware.o"
