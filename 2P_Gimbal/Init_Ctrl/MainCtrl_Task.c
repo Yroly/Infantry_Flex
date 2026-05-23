@@ -20,9 +20,9 @@ void MainCtrl_Task(){
 			osThreadResume(Shoot_Task_handle);
 			osThreadResume(Gimbal_Task_handle);
 		}
-		if(RC_CtrlData.key.Z){
+		if(VT03.keys.Z){
 			Gimbal_action.Key = 1;
-		} else if (RC_CtrlData.key.Ctrl){
+		} else if (VT03.keys.Ctrl){
 			Gimbal_action.Key = 2;
 		} else {
 			Gimbal_action.Key = 0;		

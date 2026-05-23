@@ -36,12 +36,13 @@ void DM4310_Receive(DM4310_TypeDef *Dst, uint8_t *Data){
     Dst->PCBtemp = (int16_t)Data[7];
 
     int16_t diff = Dst->MchanicalAngle - Dst->LsatAngle;
-    if (diff > 4096)
-        Dst->r--;
-    if (diff < -4096)
-        Dst->r++;
+    if (diff > 4095)
+			Dst->r--;
+    if (diff < -4095)
+			Dst->r++;
 
     Dst->Angle = Dst->r * 8192 + Dst->MchanicalAngle;
+		Dst->Angle_Yaw = Dst->MchanicalAngle * 0.0439453125f; 
     Dst->Angle_DEG = Dst->Angle * 0.0439453125f;
 //    Dst->Power = GetChassisMotorPower(Dst->Speed, Dst->TorqueCurrent, &Dst->PowerCOF);
     Dst->LsatAngle = Dst->MchanicalAngle;

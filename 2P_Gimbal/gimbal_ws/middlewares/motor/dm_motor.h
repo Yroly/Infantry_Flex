@@ -30,7 +30,8 @@ typedef struct {
     uint16_t LsatAngle;         //!<@brief 上一次的机械角度
     int16_t r;                  //!<@brief 圈数
     int32_t Angle;              //!<@brief 连续化机械角度 @warning 由于启动时角度不确定，启动时连续化角度可能有一圈的偏差
-    float Angle_DEG;            //!<@brief 连续化角度制角度 @warning 由于启动时角度不确定，启动时连续化角度可能有一圈的偏差
+		float Angle_Yaw;
+		float Angle_DEG;            //!<@brief 连续化角度制角度 @warning 由于启动时角度不确定，启动时连续化角度可能有一圈的偏差
 }DM4310_TypeDef;
 
 

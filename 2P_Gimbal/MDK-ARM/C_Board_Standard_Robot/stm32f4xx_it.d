@@ -63,4 +63,4 @@ c_board_standard_robot/stm32f4xx_it.o: ..\Src\stm32f4xx_it.c \
   ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h \
   ..\Components\Algorithm\Include\arm_math.h \
   ..\gimbal_ws\middlewares\motor\dm_motor.h \
-  ..\Components\remote_control.h
+  ..\gimbal_ws\middlewares\VT03\VT03.h ..\Components\remote_control.h

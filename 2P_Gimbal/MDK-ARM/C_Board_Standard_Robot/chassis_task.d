@@ -63,4 +63,5 @@ c_board_standard_robot/chassis_task.o: ..\Agency\Chassis\Chassis_Task.c \
   ..\Components\Algorithm\QuaternionEKF.h ..\Components\kalman_filter.h \
   ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h \
   ..\Components\Algorithm\Include\arm_math.h \
-  ..\gimbal_ws\middlewares\motor\dm_motor.h ..\RM_Lib\Inc\Chassis.h
+  ..\gimbal_ws\middlewares\motor\dm_motor.h \
+  ..\gimbal_ws\middlewares\VT03\VT03.h ..\RM_Lib\Inc\Chassis.h

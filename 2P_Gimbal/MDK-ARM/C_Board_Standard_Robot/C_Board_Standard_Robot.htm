@@ -3,7 +3,7 @@
 <title>Static Call Graph - [C_Board_Standard_Robot\C_Board_Standard_Robot.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image C_Board_Standard_Robot\C_Board_Standard_Robot.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6160001: Last Updated: Sun May 17 22:07:22 2026
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6160001: Last Updated: Sat May 23 10:09:23 2026
 <BR><P>
 <H3>Maximum Stack Usage =        280 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -542,6 +542,7 @@ Global Symbols
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisRef_Update
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalCtrl_Decide
 <LI><a href="#[29a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
 <LI><a href="#[297]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
 <LI><a href="#[296]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
@@ -577,8 +578,8 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Chassis_Offset
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisRef_Update
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Send
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalRef_Update
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalRef_Update
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalCtrl_Decide
 <LI><a href="#[29a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
 <LI><a href="#[297]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
 <LI><a href="#[296]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
@@ -592,7 +593,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_round
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Chassis_Offset
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Send
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalCtrl_Decide
 <LI><a href="#[294]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_invalid
 </UL>
 
@@ -626,8 +627,8 @@ Global Symbols
 <P><STRONG><a name="[cc]"></a>__aeabi_f2d</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, f2d.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Chassis_Offset
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisRef_Update
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Send
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalRef_Update
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalRef_Update
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalCtrl_Decide
 </UL>
 
 <P><STRONG><a name="[a2]"></a>__aeabi_d2f</STRONG> (Thumb, 56 bytes, Stack size 8 bytes, d2f.o(.text))
@@ -637,8 +638,8 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Chassis_Offset
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisRef_Update
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Send
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalRef_Update
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalRef_Update
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalCtrl_Decide
 </UL>
 
 <P><STRONG><a name="[92]"></a>__aeabi_llsl</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, llshl.o(.text))
@@ -691,8 +692,8 @@ Global Symbols
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_round
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
-<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
 </UL>
 
@@ -853,7 +854,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Chassis_Task
 </UL>
 
-<P><STRONG><a name="[c7]"></a>ChassisDown_Send</STRONG> (Thumb, 276 bytes, Stack size 8 bytes, chassis.o(.text.ChassisDown_Send))
+<P><STRONG><a name="[c7]"></a>ChassisDown_Send</STRONG> (Thumb, 124 bytes, Stack size 8 bytes, chassis.o(.text.ChassisDown_Send))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = ChassisDown_Send &rArr; CAN_Send_StdDataFrame &rArr; HAL_CAN_AddTxMessage
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_Send_StdDataFrame
@@ -869,12 +870,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Chassis_Task
 </UL>
 
-<P><STRONG><a name="[ca]"></a>ChassisRef_Update</STRONG> (Thumb, 540 bytes, Stack size 32 bytes, chassis.o(.text.ChassisRef_Update))
-<BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = ChassisRef_Update &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<P><STRONG><a name="[ca]"></a>ChassisRef_Update</STRONG> (Thumb, 556 bytes, Stack size 32 bytes, chassis.o(.text.ChassisRef_Update))
+<BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = ChassisRef_Update &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
-<LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RAMP_float
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calc
@@ -892,13 +893,13 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisCtrl_Decide
 </UL>
 
-<P><STRONG><a name="[c3]"></a>Chassis_Key_Ctrl</STRONG> (Thumb, 260 bytes, Stack size 16 bytes, chassis.o(.text.Chassis_Key_Ctrl))
+<P><STRONG><a name="[c3]"></a>Chassis_Key_Ctrl</STRONG> (Thumb, 324 bytes, Stack size 16 bytes, chassis.o(.text.Chassis_Key_Ctrl))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = Chassis_Key_Ctrl
 </UL>
 <BR>[Called By]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisCtrl_Decide
 </UL>
 
-<P><STRONG><a name="[d0]"></a>Chassis_Offset</STRONG> (Thumb, 736 bytes, Stack size 56 bytes, chassis.o(.text.Chassis_Offset))
+<P><STRONG><a name="[d0]"></a>Chassis_Offset</STRONG> (Thumb, 644 bytes, Stack size 56 bytes, chassis.o(.text.Chassis_Offset))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = Chassis_Offset &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
@@ -935,7 +936,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> init_task.o(.text.Init_Task)
 </UL>
-<P><STRONG><a name="[101]"></a>DM4310_Receive</STRONG> (Thumb, 136 bytes, Stack size 8 bytes, dm_motor.o(.text.DM4310_Receive))
+<P><STRONG><a name="[101]"></a>DM4310_Receive</STRONG> (Thumb, 148 bytes, Stack size 8 bytes, dm_motor.o(.text.DM4310_Receive))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = DM4310_Receive
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo1MsgPendingCallback
@@ -975,7 +976,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_Send_StdDataFrame
 </UL>
 <BR>[Called By]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MedianInit
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Send
+<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Send
 </UL>
 
 <P><STRONG><a name="[be]"></a>DWT_Delay</STRONG> (Thumb, 56 bytes, Stack size 0 bytes, bsp_dwt.o(.text.DWT_Delay))
@@ -1090,25 +1091,31 @@ Global Symbols
 <LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_RxEventCallback
 </UL>
 
-<P><STRONG><a name="[e2]"></a>GimbalCtrl_Decide</STRONG> (Thumb, 50 bytes, Stack size 8 bytes, gimbal.o(.text.GimbalCtrl_Decide))
-<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = GimbalCtrl_Decide &rArr; Gimbal_Key_Ctrl
+<P><STRONG><a name="[e2]"></a>GimbalCtrl_Decide</STRONG> (Thumb, 492 bytes, Stack size 32 bytes, gimbal.o(.text.GimbalCtrl_Decide))
+<BR><BR>[Stack]<UL><LI>Max Depth = 272<LI>Call Chain = GimbalCtrl_Decide &rArr; __hardfp_cos &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Stop
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_RC_Ctrl
-<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Key_Ctrl
+<BR>[Calls]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
+<LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
+<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Stop
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_RC_Ctrl
+<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Key_Ctrl
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Task
 </UL>
 
-<P><STRONG><a name="[e6]"></a>GimbalInit</STRONG> (Thumb, 936 bytes, Stack size 56 bytes, gimbal.o(.text.GimbalInit))
-<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = GimbalInit
+<P><STRONG><a name="[e7]"></a>GimbalInit</STRONG> (Thumb, 944 bytes, Stack size 64 bytes, gimbal.o(.text.GimbalInit))
+<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = GimbalInit
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Task
 </UL>
 
-<P><STRONG><a name="[e7]"></a>GimbalRef_Update</STRONG> (Thumb, 960 bytes, Stack size 8 bytes, gimbal.o(.text.GimbalRef_Update))
+<P><STRONG><a name="[e8]"></a>GimbalRef_Update</STRONG> (Thumb, 992 bytes, Stack size 8 bytes, gimbal.o(.text.GimbalRef_Update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = GimbalRef_Update &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
@@ -1118,7 +1125,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Task
 </UL>
 
-<P><STRONG><a name="[e8]"></a>Gimbal_Calc</STRONG> (Thumb, 524 bytes, Stack size 24 bytes, gimbal.o(.text.Gimbal_Calc))
+<P><STRONG><a name="[e9]"></a>Gimbal_Calc</STRONG> (Thumb, 580 bytes, Stack size 24 bytes, gimbal.o(.text.Gimbal_Calc))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = Gimbal_Calc &rArr; PID_Calc
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Calc
@@ -1126,43 +1133,38 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Task
 </UL>
 
-<P><STRONG><a name="[e3]"></a>Gimbal_Key_Ctrl</STRONG> (Thumb, 176 bytes, Stack size 8 bytes, gimbal.o(.text.Gimbal_Key_Ctrl))
+<P><STRONG><a name="[e4]"></a>Gimbal_Key_Ctrl</STRONG> (Thumb, 228 bytes, Stack size 8 bytes, gimbal.o(.text.Gimbal_Key_Ctrl))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Gimbal_Key_Ctrl
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalCtrl_Decide
 </UL>
 
-<P><STRONG><a name="[e5]"></a>Gimbal_RC_Ctrl</STRONG> (Thumb, 146 bytes, Stack size 0 bytes, gimbal.o(.text.Gimbal_RC_Ctrl))
+<P><STRONG><a name="[e6]"></a>Gimbal_RC_Ctrl</STRONG> (Thumb, 146 bytes, Stack size 0 bytes, gimbal.o(.text.Gimbal_RC_Ctrl))
 <BR><BR>[Called By]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalCtrl_Decide
 </UL>
 
-<P><STRONG><a name="[e9]"></a>Gimbal_Send</STRONG> (Thumb, 500 bytes, Stack size 24 bytes, gimbal.o(.text.Gimbal_Send))
-<BR><BR>[Stack]<UL><LI>Max Depth = 264<LI>Call Chain = Gimbal_Send &rArr; __hardfp_cos &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<P><STRONG><a name="[ea]"></a>Gimbal_Send</STRONG> (Thumb, 428 bytes, Stack size 16 bytes, gimbal.o(.text.Gimbal_Send))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = Gimbal_Send &rArr; DM_MotorSend &rArr; CAN_Send_StdDataFrame &rArr; HAL_CAN_AddTxMessage
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DM_MotorSend
-<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
-<LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Task
 </UL>
 
-<P><STRONG><a name="[e4]"></a>Gimbal_Stop</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, gimbal.o(.text.Gimbal_Stop))
+<P><STRONG><a name="[e5]"></a>Gimbal_Stop</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, gimbal.o(.text.Gimbal_Stop))
 <BR><BR>[Called By]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalCtrl_Decide
 </UL>
 
 <P><STRONG><a name="[7f]"></a>Gimbal_Task</STRONG> (Thumb, 80 bytes, Stack size 0 bytes, gimbal_task.o(.text.Gimbal_Task))
-<BR><BR>[Stack]<UL><LI>Max Depth = 264<LI>Call Chain = Gimbal_Task &rArr; Gimbal_Send &rArr; __hardfp_cos &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<BR><BR>[Stack]<UL><LI>Max Depth = 272<LI>Call Chain = Gimbal_Task &rArr; GimbalCtrl_Decide &rArr; __hardfp_cos &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xTaskGetTickCount
 <LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelayUntil
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MedianInit
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Send
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Calc
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalRef_Update
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalInit
+<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Send
+<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Calc
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalRef_Update
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalInit
 <LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalCtrl_Decide
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> init_task.o(.text.Init_Task)
@@ -2399,7 +2401,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartINSTask
 </UL>
 
-<P><STRONG><a name="[7c]"></a>MainCtrl_Task</STRONG> (Thumb, 278 bytes, Stack size 0 bytes, mainctrl_task.o(.text.MainCtrl_Task))
+<P><STRONG><a name="[7c]"></a>MainCtrl_Task</STRONG> (Thumb, 272 bytes, Stack size 0 bytes, mainctrl_task.o(.text.MainCtrl_Task))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = MainCtrl_Task &rArr; vTaskDelayUntil &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_Send_StdDataFrame
@@ -2512,7 +2514,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisRef_Update
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MedianInit
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Calc
+<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Calc
 </UL>
 
 <P><STRONG><a name="[1a7]"></a>PID_Calculate</STRONG> (Thumb, 478 bytes, Stack size 24 bytes, controller.o(.text.PID_Calculate))
@@ -2553,7 +2555,7 @@ Global Symbols
 
 <P><STRONG><a name="[c9]"></a>PID_init</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, pid.o(.text.PID_init))
 <BR><BR>[Called By]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ChassisInit
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalInit
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalInit
 </UL>
 
 <P><STRONG><a name="[1e]"></a>PendSV_Handler</STRONG> (Thumb, 100 bytes, Stack size 0 bytes, port.o(.text.PendSV_Handler))
@@ -2671,7 +2673,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_Task
 </UL>
 
-<P><STRONG><a name="[1f4]"></a>Shoot_Key_Ctrl</STRONG> (Thumb, 244 bytes, Stack size 0 bytes, shoot.o(.text.Shoot_Key_Ctrl))
+<P><STRONG><a name="[1f4]"></a>Shoot_Key_Ctrl</STRONG> (Thumb, 248 bytes, Stack size 0 bytes, shoot.o(.text.Shoot_Key_Ctrl))
 <BR><BR>[Called By]<UL><LI><a href="#[1f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ShootCtrl_Decide
 </UL>
 
@@ -4247,8 +4249,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IMU_QuaternionEKF_Update
 </UL>
 
-<P><STRONG><a name="[ea]"></a>__hardfp_cos</STRONG> (Thumb, 180 bytes, Stack size 32 bytes, cos.o(i.__hardfp_cos))
-<BR><BR>[Stack]<UL><LI>Max Depth = 240<LI>Call Chain = __hardfp_cos &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<P><STRONG><a name="[e3]"></a>__hardfp_cos</STRONG> (Thumb, 180 bytes, Stack size 32 bytes, cos.o(i.__hardfp_cos))
+<BR><BR>[Stack]<UL><LI>Max Depth = 240<LI>Call Chain = __hardfp_cos &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[28f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__set_errno
 <LI><a href="#[297]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
@@ -4257,7 +4259,7 @@ Global Symbols
 <LI><a href="#[295]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_infnan
 <LI><a href="#[298]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_cos
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Send
+<BR>[Called By]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GimbalCtrl_Decide
 </UL>
 
 <P><STRONG><a name="[bf]"></a>__hardfp_sqrtf</STRONG> (Thumb, 58 bytes, Stack size 16 bytes, sqrtf.o(i.__hardfp_sqrtf))
@@ -4269,22 +4271,22 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[296]"></a>__ieee754_rem_pio2</STRONG> (Thumb, 938 bytes, Stack size 120 bytes, rred.o(i.__ieee754_rem_pio2))
-<BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = __ieee754_rem_pio2 &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = __ieee754_rem_pio2 &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
-<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[299]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fabs
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
+<BR>[Called By]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
 </UL>
 
 <P><STRONG><a name="[298]"></a>__kernel_cos</STRONG> (Thumb, 322 bytes, Stack size 64 bytes, cos_i.o(i.__kernel_cos))
-<BR><BR>[Stack]<UL><LI>Max Depth = 176<LI>Call Chain = __kernel_cos &rArr; __kernel_poly &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<BR><BR>[Stack]<UL><LI>Max Depth = 176<LI>Call Chain = __kernel_cos &rArr; __kernel_poly &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
@@ -4292,31 +4294,31 @@ Global Symbols
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
+<BR>[Called By]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
 </UL>
 
 <P><STRONG><a name="[29a]"></a>__kernel_poly</STRONG> (Thumb, 248 bytes, Stack size 24 bytes, poly.o(i.__kernel_poly))
-<BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = __kernel_poly &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = __kernel_poly &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[297]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
 <LI><a href="#[298]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_cos
 </UL>
 
 <P><STRONG><a name="[297]"></a>__kernel_sin</STRONG> (Thumb, 280 bytes, Stack size 72 bytes, sin_i.o(i.__kernel_sin))
-<BR><BR>[Stack]<UL><LI>Max Depth = 184<LI>Call Chain = __kernel_sin &rArr; __kernel_poly &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<BR><BR>[Stack]<UL><LI>Max Depth = 184<LI>Call Chain = __kernel_sin &rArr; __kernel_poly &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[29a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
 <LI><a href="#[29b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ARM_fpclassify
 <LI><a href="#[29c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_underflow
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
+<BR>[Called By]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
 </UL>
 
 <P><STRONG><a name="[295]"></a>__mathlib_dbl_infnan</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, dunder.o(i.__mathlib_dbl_infnan))
@@ -4324,7 +4326,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
+<BR>[Called By]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
 </UL>
 
 <P><STRONG><a name="[294]"></a>__mathlib_dbl_invalid</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, dunder.o(i.__mathlib_dbl_invalid))
@@ -4332,7 +4334,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
+<BR>[Called By]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
 </UL>
 
 <P><STRONG><a name="[29c]"></a>__mathlib_dbl_underflow</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, dunder.o(i.__mathlib_dbl_underflow))
@@ -4371,7 +4373,7 @@ Global Symbols
 <P><STRONG><a name="[28f]"></a>__set_errno</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, errno.o(i.__set_errno))
 <BR><BR>[Called By]<UL><LI><a href="#[28d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sqrtf
 <LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sqrtf
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
 <LI><a href="#[19e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_atan2f
 <LI><a href="#[19f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_asinf
 <LI><a href="#[1a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_acosf
@@ -5242,7 +5244,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usb_task
 </UL>
 
-<P><STRONG><a name="[23c]"></a>UsbSendImuData</STRONG> (Thumb, 144 bytes, Stack size 8 bytes, usb_task.o(.text.UsbSendImuData))
+<P><STRONG><a name="[23c]"></a>UsbSendImuData</STRONG> (Thumb, 184 bytes, Stack size 8 bytes, usb_task.o(.text.UsbSendImuData))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = UsbSendImuData &rArr; USB_Transmit &rArr; CDC_Transmit_FS &rArr; USBD_CDC_TransmitPacket &rArr; USBD_LL_Transmit &rArr; HAL_PCD_EP_Transmit &rArr; USB_EPStartXfer
 </UL>
 <BR>[Calls]<UL><LI><a href="#[239]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USB_Transmit
@@ -5251,7 +5253,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usb_task
 </UL>
 
-<P><STRONG><a name="[23d]"></a>UsbSendTallyData</STRONG> (Thumb, 40 bytes, Stack size 8 bytes, usb_task.o(.text.UsbSendTallyData))
+<P><STRONG><a name="[23d]"></a>UsbSendTallyData</STRONG> (Thumb, 72 bytes, Stack size 8 bytes, usb_task.o(.text.UsbSendTallyData))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = UsbSendTallyData &rArr; USB_Transmit &rArr; CDC_Transmit_FS &rArr; USBD_CDC_TransmitPacket &rArr; USBD_LL_Transmit &rArr; HAL_PCD_EP_Transmit &rArr; USB_EPStartXfer
 </UL>
 <BR>[Calls]<UL><LI><a href="#[239]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USB_Transmit

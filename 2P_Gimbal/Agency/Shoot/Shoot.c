@@ -70,42 +70,36 @@ void Shoot_Rc_Ctrl(){
  *@breif 键鼠控制
  */
 void Shoot_Key_Ctrl(){
-	static char mouse_middle_flag = 0;
+	static char mouse_middle_flag = 0, Key_E_flag = 0;
   static uint16_t normal_time = 0,shoot_tim = 0;
-	if(GimbalCtrl != gAim){							
-		if(VT03.mouse.left == 1){
-			SHOOT.Action = SHOOT_READY;							
-			shoot_tim = 0;
-			SHOOT.Action = SHOOT_RUNNING;  
+	if(Referee_data_Rx.game_state == 1) SHOOT.Action = SHOOT_READY;
+	else{
+		if(VT03.keys.E == 1&& Key_E_flag == 0){
+			if(SHOOT.Action != SHOOT_READY) SHOOT.Action = SHOOT_READY;
+			else SHOOT.Action = SHOOT_STOP;
+			Key_E_flag = 1;
 		}
+		if(VT03.keys.E == 0) Key_E_flag = 0;
+	}
+	if(GimbalCtrl != gAim){		
+		if(VT03.mouse.left == 1)SHOOT.Action = SHOOT_RUNNING;
 		if(SHOOT.Action == SHOOT_RUNNING && VT03.mouse.left == 0){
 			SHOOT.Action = SHOOT_READY;											   
 		}
-			shoot_tim ++;					
-		if(SHOOT.Action != SHOOT_STUCKING && shoot_tim > 3000){
-			SHOOT.Action = SHOOT_STOP;								
-		}
-	 } else {
+	} else {
 		SHOOT.Action = SHOOT_READY;
 		if(ReceiveVisionData.data.dis > 0.1f){
 			if(ReceiveVisionData.data.FireFlag == 0){
 				if(VT03.mouse.left == 1)	SHOOT.Action = SHOOT_RUNNING;
 			} else {
-				if(VT03.mouse.middle == 1 && mouse_middle_flag == 0){
-					if(SHOOT.Action != SHOOT_NORMAL) SHOOT.Action = SHOOT_NORMAL;
-					else SHOOT.Action = SHOOT_READY;
-					mouse_middle_flag = 1;
-				}
-				if(VT03.mouse.middle == 0) mouse_middle_flag = 0;
-				if(SHOOT.Action != SHOOT_NORMAL) {
 					if(Referee_data_Rx.game_state == 1) SHOOT.Action = SHOOT_RUNNING;
-					else SHOOT.Action = SHOOT_READY;
-				}
+					else {
+						if(VT03.mouse.left == 1) SHOOT.Action = SHOOT_RUNNING;
+						else SHOOT.Action = SHOOT_READY;
+					}
 			}
 		}
-	if(Gimbal.LastCtrl == gAim && GimbalCtrl != gAim) 
-		SHOOT.Action = SHOOT_STOP;
-	}       
+	}
 }
 void Shoot_Stop(){
 	SHOOT.Ref_3508[LEFT]    =  0;

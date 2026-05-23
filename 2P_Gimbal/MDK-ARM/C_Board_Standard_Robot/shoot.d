@@ -63,7 +63,8 @@ c_board_standard_robot/shoot.o: ..\Agency\Shoot\Shoot.c \
   ..\Components\Algorithm\QuaternionEKF.h ..\Components\kalman_filter.h \
   ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h \
   ..\Components\Algorithm\Include\arm_math.h \
-  ..\gimbal_ws\middlewares\motor\dm_motor.h ..\Agency\USB\USB_Task.h \
+  ..\gimbal_ws\middlewares\motor\dm_motor.h \
+  ..\gimbal_ws\middlewares\VT03\VT03.h ..\Agency\USB\USB_Task.h \
   ..\Inc\usb_device.h \
   ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_def.h \
   ..\Inc\usbd_conf.h C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h \
@@ -75,5 +76,4 @@ c_board_standard_robot/shoot.o: ..\Agency\Shoot\Shoot.c \
   ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ioreq.h \
   ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h \
   ..\Components\Time.h ..\Components\Function.h \
-  ..\Agency\Gimbal\Gimbal.h ..\Agency\WatchDog\Music.h \
-  ..\gimbal_ws\middlewares\VT03\VT03.h
+  ..\Agency\Gimbal\Gimbal.h ..\Agency\WatchDog\Music.h

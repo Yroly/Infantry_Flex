@@ -18,6 +18,7 @@
 #include "Function.h"
 #include "ins_task.h"
 #include "dm_motor.h"
+#include "VT03.h"
 
 #define CHASSIS_RUN 1
 #define GIMBAL_RUN  1
@@ -25,20 +26,22 @@
 #define current_to_out 16384.0f / 3.0f
 
 /* speed*2*r*60 */
-#define SHOOT_SPEED 6500
+#define SHOOT_SPEED 6200
 #define PLUCK_SPEED 4000
 #define PLUCK_MOTOR_ONE 1080 //单发弹丸机械角度
+
 #define Yaw_Mid_Front 1368
-#define Yaw_Goal 681
-#define Pitch_Mid    4100
-#define UnderPitch_Mid 6913
-#define P_ADD_limit 10
-#define P_LOSE_limit -40
-#define UNP_ADD_limit -56
-#define TO_NORMAL_ANGLE -80
-#define TO_GOAL_ANGLE -90
-#define UNP_LOSE_limit -167
-#define TUNNEL_MID_YAW 30
+#define Yaw_Goal 637
+#define Pitch_Mid    3963
+#define UnderPitch_Mid 6868
+
+#define P_ADD_limit 6
+#define P_LOSE_limit -50
+    
+#define UNP_ADD_limit -76
+#define UNP_LOSE_limit -176
+
+#define TUNNEL_MID_YAW 28
 
 #define limit(IN, MAX, MIN) \
     if (IN < MIN)           \
@@ -150,7 +153,7 @@ typedef enum {
 	vision_offline = 0,   
 	vision_online  = 1,    
 }vision_status_e;
-typedef enum {
+typedef enum{
 	shoot_mode_stop = 0,   
 	shoot_mode_ready  = 1,   
   shoot_mode_fire = 2,
@@ -160,11 +163,12 @@ typedef enum {
 typedef struct  {
   Gimbal_status_e Pitch: 1;
   Gimbal_status_e Yaw : 1;
+	Gimbal_status_e UnderPitch : 1;
 } Gimbal_status_t;
 typedef struct  {
-	uint16_t vision_distance;  
+	int16_t vision_distance;  
 	int16_t Pitch_angle;
-	int16_t Yaw_angle;
+	int16_t UnderPitch_angle;
 	uint16_t Offset_Angle;
 } Gimbal_data_t;
 typedef struct{
@@ -174,7 +178,7 @@ typedef struct{
 	vision_status_e vision_status : 1;          
 	shoot_mode_e shoot_mode;				           
 	uint8_t Key; 
-	uint8_t vision_number; 
+	uint8_t goal_flag; 
 }Gimbal_action_t;
 /* 上下板通信发送 */
 extern Gimbal_data_t Gimbal_data;

@@ -1,5 +1,5 @@
 #include "usb_task.h"
-
+#include "Gimbal.h"
 static SendDataImu_s SEND_DATA_IMU = {.header.sof = 0x5A,
 																			.header.len = (uint8_t)(sizeof(SendDataImu_s) - 6),
 																			.header.id  = 0x01,
@@ -8,8 +8,8 @@ ReceiveVisionData_t ReceiveVisionData = {.header.sof = 0x5A,
 																				 .header.id  = 0X02,
 																				 .eof = 0xA5,
 																				 .data.dis = -1};
-static SendDataTally_t SendDataTally = {.header.sof = 0x5A,
-																				.header.len = (uint8_t)(sizeof(SendDataTally_t) - 6),
+static SendTallyData_t SendTallyData = {.header.sof = 0x5A,
+																				.header.len = (uint8_t)(sizeof(SendTallyData_t) - 6),
 																				.header.id = 0x03,
 																				.eof = 0xA5};
 
@@ -33,16 +33,19 @@ void usb_task(void *pvParameters){
 }
 static void UsbInit(void){
 	memset(&SEND_DATA_IMU.data,0,sizeof(SEND_DATA_IMU.data));
-	memset(&SendDataTally.data,0,sizeof(SendDataTally.data));
+	memset(&SendTallyData.data,0,sizeof(SendTallyData.data));
 	memset(&ReceiveVisionData.data,0,sizeof(ReceiveVisionData.data));
 }
 static void UsbSendTallyData(void){
-	SendDataTally.time_stamp = HAL_GetTick();//获取当前时间戳
-
-	SendDataTally.data.following = 1;
-	SendDataTally.data.power_rune = 1;
-	SendDataTally.data.quanta = 0;
-  USB_Transmit((uint8_t *)&SendDataTally, sizeof(SendDataTally_t));	
+	SendTallyData.time_stamp = HAL_GetTick();//获取当前时间戳
+	
+	if(GimbalCtrl == gAim) SendTallyData.data.following = 1;
+	else SendTallyData.data.following = 0;
+	if(VT03.keys.B == 1){
+		SendTallyData.data.power_rune = 1;	
+	}
+	SendTallyData.data.quanta = 0;
+  USB_Transmit((uint8_t *)&SendTallyData, sizeof(SendTallyData_t));	
 }
 static void UsbSendImuData(void){
 	SEND_DATA_IMU.time_stamp = HAL_GetTick();//获取当前时间戳
@@ -50,9 +53,9 @@ static void UsbSendImuData(void){
 	SEND_DATA_IMU.data.pitch = 	IMU.Angle_Pitch * PI / 180.0f;//rad
 	SEND_DATA_IMU.data.yaw 	 = 	IMU.Angle_Yaw * PI / 180.0f;
 	SEND_DATA_IMU.data.roll  =	IMU.Angle_Roll * PI / 180.0f;
-	SEND_DATA_IMU.data.pitch_vel = IMU.Gyro_Pitch ;
-	SEND_DATA_IMU.data.yaw_vel 	 = IMU.Gyro_Yaw ;  
-	SEND_DATA_IMU.data.roll_vel  = IMU.Gyro_Roll ; 
+	SEND_DATA_IMU.data.pitch_vel = IMU.Gyro_Pitch * PI / 180.0f;
+	SEND_DATA_IMU.data.yaw_vel 	 = IMU.Gyro_Yaw * PI / 180.0f;  
+	SEND_DATA_IMU.data.roll_vel  = IMU.Gyro_Roll * PI / 180.0f; 
 	SEND_DATA_IMU.data.self_color = Referee_data_Rx.robot_color;
   USB_Transmit((uint8_t *)&SEND_DATA_IMU, sizeof(SendDataImu_s));
 }

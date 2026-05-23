@@ -7,13 +7,14 @@
 #include "usbd_conf.h"
 
 #define SEND_SOF    ((uint8_t)0x5A)
-#define SEND_EOF    ((uint8_t)0xA5)
 #define RECEIVE_SOF ((uint8_t)0x5A)
+#define SEND_EOF    ((uint8_t)0xA5)
 #define RECEIVE_EOF ((uint8_t)0xA5)
 
 #define SEND_IMU_DATA_ID ((uint8_t)0x01)
 #define RECEIVE_VISION_DATA_ID ((uint8_t)0x02)
 #define SEND_TALLY_DATA_ID ((uint8_t)0x03)
+#define RECEIVE_CAPABILITIES_DATA_ID ((uint8_t)0x04)
 /*------------- Header of Usb -------------*/
 typedef struct{
 	uint8_t sof;
@@ -75,6 +76,16 @@ typedef struct{
 	} __PACKED data;
 	uint8_t eof; // 0xA5
 }__PACKED SendDataTally_t;
+/*------------- Quanta -------------*/
+typedef struct{
+  FrameHeader_t frame_header;
+  uint32_t time_stamp;
+  struct {
+	uint8_t custom_byte_block[300];  
+  }__PACKED data;
+
+  uint8_t eof;
+}__PACKED ReceiveQuantaData_t;
 
 extern void usb_task();
 

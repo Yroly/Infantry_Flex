@@ -63,7 +63,8 @@ c_board_standard_robot/task_music.o: ..\Agency\WatchDog\Task_Music.c \
   ..\Components\Algorithm\QuaternionEKF.h ..\Components\kalman_filter.h \
   ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h \
   ..\Components\Algorithm\Include\arm_math.h \
-  ..\gimbal_ws\middlewares\motor\dm_motor.h ..\Bsp\bsp_buzzer.h \
+  ..\gimbal_ws\middlewares\motor\dm_motor.h \
+  ..\gimbal_ws\middlewares\VT03\VT03.h ..\Bsp\bsp_buzzer.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h \
   ..\Components\data_exchange.h ..\Agency\WatchDog\music.h

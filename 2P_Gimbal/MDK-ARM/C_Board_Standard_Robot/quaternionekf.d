@@ -65,7 +65,8 @@ c_board_standard_robot/quaternionekf.o: \
   ..\Components\Variate.h ..\Init_Ctrl\ins_task.h \
   ..\Components\Devices\BMI088driver.h ..\Inc\main.h \
   ..\Components\Algorithm\QuaternionEKF.h \
-  ..\gimbal_ws\middlewares\motor\dm_motor.h ..\Inc\usb_device.h \
+  ..\gimbal_ws\middlewares\motor\dm_motor.h \
+  ..\gimbal_ws\middlewares\VT03\VT03.h ..\Inc\usb_device.h \
   ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_def.h \
   ..\Inc\usbd_conf.h C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h \
   ..\Inc\usbd_cdc_if.h \

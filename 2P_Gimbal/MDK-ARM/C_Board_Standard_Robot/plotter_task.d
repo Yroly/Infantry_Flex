@@ -80,4 +80,4 @@ c_board_standard_robot/plotter_task.o: \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   ..\Agency\USB\Attribute_Typedef.h ..\Components\Function.h \
   ..\Components\Variate.h ..\gimbal_ws\middlewares\motor\dm_motor.h \
-  ..\Components\Function.h
+  ..\gimbal_ws\middlewares\VT03\VT03.h ..\Components\Function.h

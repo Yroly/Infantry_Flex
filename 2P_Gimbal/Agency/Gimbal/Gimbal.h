@@ -40,5 +40,6 @@ extern void Gimbal_Send();
 extern void Gimbal_SendDown();
 
 extern float Kff_v,Kff_a;
+extern uint8_t goal_flag;
 
 #endif

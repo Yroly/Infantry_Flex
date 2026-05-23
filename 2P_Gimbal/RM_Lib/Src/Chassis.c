@@ -74,7 +74,7 @@ void Chassis_RC_Ctrl(){
 static char Key_F_flag = 0;
 void Chassis_Key_Ctrl(){
 	if(CHASSIS.Action == ChassisStop ) CHASSIS.Action = ChassisNormal;
-	static char Key_R_flag = 0,Key_Ctrl_flag = 0;
+	static char Key_R_flag = 0, Key_Ctrl_flag = 0, Key_Q_flag = 0;
 	static uint16_t tim;
 	tim ++;
 	Communication_Speed_Tx.Close_flag = 0;			
@@ -86,6 +86,13 @@ void Chassis_Key_Ctrl(){
 	if(VT03.keys.A) VT03.ch_rx = -1;
 	else if(VT03.keys.D) VT03.ch_rx = 1;
 	else VT03.ch_rx = 0;    
+	/* 按下Q键过洞底盘跟随 */
+	if(VT03.keys.Q == 1 && Key_Q_flag == 0){
+		if(CHASSIS.Action != ChassisFollow) CHASSIS.Action = ChassisFollow;
+		else CHASSIS.Action = ChassisNormal;
+		Key_Q_flag = 1;
+	}
+	if (VT03.keys.Q == 0) Key_Q_flag = 0;	
   /* R键按下小陀螺 */
 	if(VT03.keys.R == 1 && Key_R_flag == 0){
 		if(CHASSIS.Action != ChassisGyroscope) CHASSIS.Action = ChassisGyroscope;
@@ -103,6 +110,7 @@ void Chassis_Key_Ctrl(){
     }
   }
 	if(VT03.keys.Ctrl == 1) CHASSIS.Action = ChassisFollow;
+	if(VT03.keys.Ctrl == 0 && CHASSIS.Action == ChassisFollow) CHASSIS.Action = ChassisNormal;
 }
 void Chassis_Stop(){
 	CHASSIS.Action = ChassisStop;
@@ -125,8 +133,13 @@ void ChassisRef_Update(){
         CHASSIS.MidAngle = Yaw_Mid_Back;
         MidMode = BACK;
     }
+		if(goal_flag == 0){
+        PID_Calc(&Chassis_Place_pid_Rotate,GimYaw.MchanicalAngle,QuickCentering(GimYaw.MchanicalAngle, CHASSIS.MidAngle));
+				PID_Calc(&Chassis_Speed_pid_Rotate,GimYaw.Speed,Chassis_Place_pid_Rotate.Output);		
+		} else {
         PID_Calc(&Chassis_Place_pid_Rotate,GimYaw.MchanicalAngle,QuickCentering(GimYaw.MchanicalAngle, Yaw_Goal));
-				PID_Calc(&Chassis_Speed_pid_Rotate,GimYaw.Speed,Chassis_Place_pid_Rotate.Output);
+				PID_Calc(&Chassis_Speed_pid_Rotate,GimYaw.Speed,Chassis_Place_pid_Rotate.Output);				
+		}
         Chassis_Speed_pid_Rotate.Output -= Chassis_Place_pid_Rotate.Output;//前馈
 				Communication_Speed_Tx.Chassis_Speed.rotate_ref = Chassis_Speed_pid_Rotate.Output + FeedForward_Calc(&Chassis_FF) + VT03.wheel * 2000 * PI;
 				limit(Communication_Speed_Tx.Chassis_Speed.rotate_ref, Follow_Speed_MAX, -Follow_Speed_MAX);
@@ -159,38 +172,39 @@ void Chassis_Offset(){
 	static int16_t forward_back_ref = 0, left_right_ref = 0,rotate_ref = 0;
 	static int16_t Speed_Gain;
 	static float Ramp_forward_back_ref,Ramp_left_right_ref,Ramp_rotate_ref;	
-  if(MidMode == FRONT) 
-    chassis_offset = (Yaw_Mid_Front - GimYaw.MchanicalAngle) / 1303.64f;//底盘补偿角
-  else if(MidMode == BACK)
-    chassis_offset = (Yaw_Mid_Back - GimYaw.MchanicalAngle) / 1303.64f;
+//  if(MidMode == FRONT) 
+//    chassis_offset = (Yaw_Mid_Front - GimYaw.MchanicalAngle) / 1303.64f;//底盘补偿角
+//  else if(MidMode == BACK)
+//    chassis_offset = (Yaw_Mid_Back - GimYaw.MchanicalAngle) / 1303.64f;
+  chassis_offset = (Yaw_Mid_Front - GimYaw.MchanicalAngle) / 1303.64f;//底盘补偿角
 	Gimbal_data.Offset_Angle = chassis_offset * 1000;
 	
 	R_C = Yaw_Mid_Right;
 	L_C = Yaw_Mid_Left;
 	/* 按住Shift加速 */
 	if(VT03.keys.Shift){
-		Speed_Gain = 7000; 
-	} else Speed_Gain = 4000;
+		Speed_Gain = 4000; 
+	} else Speed_Gain = 2000;
   
   if(MidMode == FRONT){
-  forward_back_ref = -VT03.ch_ry * Speed_Gain;
-  left_right_ref   = -VT03.ch_rx * Speed_Gain * 0.7;
+		forward_back_ref = -VT03.ch_ry * Speed_Gain;
+		left_right_ref   =  VT03.ch_rx * Speed_Gain * 0.7;
   }else if(MidMode == BACK){
-  forward_back_ref = VT03.ch_ry * Speed_Gain;
-  left_right_ref   = VT03.ch_rx * Speed_Gain * 0.7;
+		forward_back_ref = -VT03.ch_ry * Speed_Gain;
+		left_right_ref   =  VT03.ch_rx * Speed_Gain * 0.7;
   }
 	
   if(CHASSIS.Action == ChassisGyroscope && (VT03.ch_rx || VT03.ch_ry || VT03.keys.Shift == 1)){
     rotate_ref = 1000 * PI;
-    Ramp_rotate_ref = RAMP_float(rotate_ref,Ramp_rotate_ref,Speed_Gain/750.0); 
+    Ramp_rotate_ref = RAMP_float(rotate_ref,Ramp_rotate_ref,Speed_Gain / 750.0f); 
     Communication_Speed_Tx.Chassis_Speed.rotate_ref = RAMP_float(rotate_ref,Communication_Speed_Tx.Chassis_Speed.rotate_ref,Speed_Gain/750.0); 
   }		                                  	
   /* 底盘补偿计算 小陀螺移动 只有YAW轴在线才可解算 */
-  if(DeviceState.Gimbal_State[YAW] == Device_Online && CHASSIS.Action == ChassisGyroscope){
-    Communication_Speed_Tx.Chassis_Speed.left_right_ref =     - forward_back_ref * arm_sin_f32(-chassis_offset)
-                                                              + left_right_ref * arm_cos_f32(-chassis_offset);
-    Communication_Speed_Tx.Chassis_Speed.forward_back_ref  =    forward_back_ref * arm_cos_f32(-chassis_offset) 
-                                                              + left_right_ref * arm_sin_f32(-chassis_offset);
+  if(DeviceState.Gimbal_State[YAW] == Device_Online && goal_flag == 0){
+      Communication_Speed_Tx.Chassis_Speed.forward_back_ref = forward_back_ref * arm_sin_f32( -chassis_offset)
+                                                                + left_right_ref * arm_cos_f32( -chassis_offset);
+      Communication_Speed_Tx.Chassis_Speed.left_right_ref   = forward_back_ref * arm_cos_f32( chassis_offset) 
+                                                                + left_right_ref * arm_sin_f32( chassis_offset);
   } else {
     Communication_Speed_Tx.Chassis_Speed.forward_back_ref =  forward_back_ref;
     Communication_Speed_Tx.Chassis_Speed.left_right_ref   =  left_right_ref;
@@ -222,21 +236,8 @@ void ChassisDown_Send(){
 		case ChassisStop: Gimbal_action.move_status = stop; break;
 		case ChassisNormal: Gimbal_action.move_status = normal; break;
 		case ChassisGyroscope: Gimbal_action.move_status = rotate; break;
-		case ChassisFollow:
-      if(VT03.mode == RcInput) Gimbal_action.move_status = follow;
-      if(VT03.mode == ComInput){
-        if(VT03.keys.Q == 1 && Key_Q_flag == 0){
-          if(Gimbal_action.move_status != Auto) Gimbal_action.move_status = Auto;
-          else Gimbal_action.move_status = follow;
-          Key_Q_flag = 1;
-        }
-        if(VT03.keys.Q == 0){
-          if(Gimbal_action.move_status != Auto) Gimbal_action.move_status = follow;
-          Key_Q_flag = 0;
-        } 
-           
-      }
-      break;	
+		case ChassisFollow: Gimbal_action.move_status = follow; 
+			break;	
 	}   
 #if CHASSIS_RUN
     CAN_Send_StdDataFrame(&hcan2, 0x110, (uint8_t *)&send_data);	

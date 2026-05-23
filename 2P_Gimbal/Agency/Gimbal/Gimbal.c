@@ -8,6 +8,7 @@ eGimbal Gimbal;
 eGimbalCtrl GimbalCtrl;
 int16_t Can2Send[4] = {0};
 uint8_t goal_flag = 0;
+int16_t Ramp_UnderP = 0;
 PID_TypeDef Gimbal_Place_pid_UnderP[GIMBAL_MODE];
 PID_TypeDef Gimbal_Speed_pid_UnderP[GIMBAL_MODE];
 
@@ -17,6 +18,12 @@ PID_TypeDef Gimbal_Speed_pid_Pitch[GIMBAL_MODE];
 PID_TypeDef Gimbal_Place_pid_Yaw[GIMBAL_MODE];
 PID_TypeDef Gimbal_Speed_pid_Yaw[GIMBAL_MODE];
 
+float GimbalPitchOffset = 0;
+float KPitch = 1500.0f;
+float GimbalUnderPitchOffset = 0;
+float KUnderPitch = 2900;
+float KUnderPitch1 = 1.2;
+float KUnderPitch2 = 0;
 
 void GimbalInit(){
 	GimbalCtrl = gNormal;
@@ -31,11 +38,11 @@ void GimbalInit(){
 	PID_init(&Gimbal_Speed_pid_UnderP[AIM],16384,0,0,0,0,0,0,0);
 	
 	PID_init(&Gimbal_Place_pid_Pitch[INIT],16384,0,0,5,0,0,0,0);	
-	PID_init(&Gimbal_Speed_pid_Pitch[INIT],16384,0,0,3,0,0,0,0);	
+	PID_init(&Gimbal_Speed_pid_Pitch[INIT],16384,0,0,5,0,0,0,0);	
 	PID_init(&Gimbal_Place_pid_Pitch[GYRO],16384,1,0,10,0,100,0,0);	
 	PID_init(&Gimbal_Speed_pid_Pitch[GYRO],16384,1,0,-50,0,0,0,0);	
-	PID_init(&Gimbal_Place_pid_Pitch[AIM],16384,0,0,0,0,0,0,0);	
-	PID_init(&Gimbal_Speed_pid_Pitch[AIM],16384,0,0,0,0,0,0,0);
+	PID_init(&Gimbal_Place_pid_Pitch[AIM],16384,0,0,25,0,300,0,0);	
+	PID_init(&Gimbal_Speed_pid_Pitch[AIM],16384,0,0,-100,0,0,0,0);
 
 	PID_init(&Gimbal_Place_pid_Yaw[INIT],16384,0,0,2,0,0,0,0);	
 	PID_init(&Gimbal_Speed_pid_Yaw[INIT],16384,0,0,3,0,0,0,0);	
@@ -43,12 +50,22 @@ void GimbalInit(){
 	PID_init(&Gimbal_Speed_pid_Yaw[GYRO],16384,1,0,60.0f,0.0,0,0,0);	
 	PID_init(&Gimbal_Place_pid_Yaw[MECH],16384,1,0,5,0,0,0,0);	
 	PID_init(&Gimbal_Speed_pid_Yaw[MECH],16384,1,0,50,0,0,0,0);	
-	PID_init(&Gimbal_Place_pid_Yaw[AIM],16384,0,0,5.0,0,150.0,0,0);	
-	PID_init(&Gimbal_Speed_pid_Yaw[AIM],16384,0,0,50.0f,0,0,0,0);	
+	PID_init(&Gimbal_Place_pid_Yaw[AIM],16384,0,0,25.0,0,300.0,0,0);	
+	PID_init(&Gimbal_Speed_pid_Yaw[AIM],16384,0,0,70.0f,0,0,0,0);	
 }
 /*控制方式决定函数*/
 void GimbalCtrl_Decide(){
 	if(DeviceState.VT03_State == Device_Online){
+		if(IMU.Angle_Pitch < 20.0f && IMU.Angle_Pitch > -50.0f)
+			GimbalPitchOffset = KPitch * cos(fabs(IMU.Angle_Pitch) * PI / 180.0f);
+//		else if(ins->Pitch >= 20.0f)
+//			GimbalPitchOffset = -12000.0f * sin(fabs(ins->Pitch)*PI/180.0f);
+		else GimbalPitchOffset = 0;
+//		if((UnderPitch.Angle_DEG - UNP_LOSE_limit) < 80.0f ) 
+			GimbalUnderPitchOffset = KUnderPitch * cos((UnderPitch.Angle_DEG - UNP_LOSE_limit) * PI / 180.0f) + KUnderPitch1 * Can2Send[1] + KUnderPitch2 * cos(fabs(IMU.Angle_Pitch) * PI / 180.0f); 
+//		else	GimbalUnderPitchOffset = KUnderPitch1 * sin((UnderPitch.Angle_DEG + 92) * PI / 180.0f); 
+//		else	GimbalUnderPitchOffset = KUnderPitch1 * cos(fabs(IMU.Angle_Pitch) * PI / 180.0f); 
+		
 		VT03.mode == ComInput ? Gimbal_Key_Ctrl() :
 		VT03.mode == RcInput ? Gimbal_RC_Ctrl() :
 		Gimbal_Stop();
@@ -77,22 +94,26 @@ void Gimbal_RC_Ctrl(){
 }
 /* 键鼠控制 */
 void Gimbal_Key_Ctrl(){
-  if(GimbalCtrl == gStop) GimbalCtrl = gNormal;
 	static char Key_F_flag = 0, Key_Q_flag = 0, mouse_r_flag = 0;
-	if(GimbalCtrl != gAim){
+  if(GimbalCtrl == gStop) GimbalCtrl = gNormal;
+	if(GimbalCtrl == gNormal){
     /* F转头180 */
 		if(VT03.keys.F == 1 && Key_F_flag == 0){
 			Gimbal.Ref[YAW] += 180;
 			Key_F_flag = 1;
 		}
 		if(VT03.keys.F == 0) Key_F_flag = 0;
+		/* Q按下过洞模式 */
+		if(VT03.keys.Q == 1 && Key_Q_flag == 0){
+			if(goal_flag != 1) goal_flag = 1;
+			else{
+				goal_flag = 0;
+				Gimbal.Ref[YAW] = IMU.Angle_Yawcontinuous;
+			}
+				Key_Q_flag = 1;
+		}
+		if(VT03.keys.Q == 0) Key_Q_flag = 0;
 	}
-  /* Q按下过洞模式 */
-  if(VT03.keys.Q == 1 && Key_Q_flag == 0){
-    
-    Key_Q_flag = 1;
-  }
-  if(VT03.keys.Q == 0) Key_Q_flag = 0;
   /* 右键云台自瞄模式控制 */
 	if(VT03.mouse.right == 1 && mouse_r_flag == 0 ){
 		if(GimbalCtrl != gAim) GimbalCtrl = gAim;
@@ -123,7 +144,7 @@ void GimbalRef_Update(){
   IMU.VisionAngle = IMU.Angle_Yawcontinuous + yaw_diff;
 
 	float goal_yaw_diff = 0;
-	goal_yaw_diff = TUNNEL_MID_YAW - GimYaw.Angle_DEG;
+	goal_yaw_diff = TUNNEL_MID_YAW - GimYaw.Angle_Yaw;
   if(goal_yaw_diff > 180.0f){
     goal_yaw_diff -= 360.0f;
   } else if (goal_yaw_diff < -180.0f){
@@ -137,20 +158,23 @@ void GimbalRef_Update(){
 			if(goal_flag == 1){
 				if(VT03.mode == ComInput){
 					Gimbal.Ref[YAW] = GimYaw.Angle_DEG + goal_yaw_diff;
-					Gimbal.Ref[UnderP] = TO_GOAL_ANGLE;
+					Gimbal.Ref[UnderP] = UNP_LOSE_limit;
+					Gimbal.increase[YAW] = VT03.mouse.vx * 0.1f;
 					Gimbal.increase[PITCH]  = VT03.mouse.vy * 0.1f;					
 				} else if (VT03.mode == RcInput){
 					Gimbal.Ref[YAW] = GimYaw.Angle_DEG + goal_yaw_diff;
-					Gimbal.Ref[UnderP] = TO_GOAL_ANGLE;
+					Gimbal.Ref[UnderP] = UNP_LOSE_limit;
+					Gimbal.increase[YAW]   = VT03.ch_lx * 0.1f;
 					Gimbal.increase[PITCH]  = VT03.ch_ly * 0.1f;										
 				}	
+				Gimbal.Ref[YAW] -= Gimbal.increase[YAW];
 				Gimbal.Ref[PITCH] -= Gimbal.increase[PITCH];
 				limit(Gimbal.Ref[UnderP],UNP_ADD_limit,UNP_LOSE_limit);
 				limit(Gimbal.Ref[PITCH],P_ADD_limit,P_LOSE_limit);		 								
 			} else {
 				//判断控制模式 Com键鼠模式 Rc遥控模式
 				if(VT03.mode == ComInput){
-					Gimbal.increase[YAW]    = VT03.mouse.vx * 0.1f;
+					Gimbal.increase[YAW] = VT03.mouse.vx * 0.1f;
 					Gimbal.Ref[UnderP] = UNP_ADD_limit;
 					Gimbal.increase[PITCH]  = VT03.mouse.vy * 0.1f;
 				} else if (VT03.mode == RcInput){
@@ -189,7 +213,7 @@ void GimbalRef_Update(){
         Gimbal.increase[YAW]   = 0;
         Gimbal.increase[PITCH] = 0;
 				Gimbal.increase[UnderP] = 0;
-				Gimbal.Ref[UnderP] = UnderPitch.Angle_DEG;
+				Gimbal.Ref[UnderP] = UNP_ADD_limit;
         Gimbal.Ref[PITCH] = IMU.Angle_Pitch;
         Gimbal.Ref[YAW]   = IMU.Angle_Yawcontinuous;    
       break;
@@ -197,7 +221,6 @@ void GimbalRef_Update(){
 }
 float FF_Yaw = 0.0f, K_FF = 0.0f;
 void Gimbal_Calc(){
-	static char yawgoal_flag = 0,underp_flag = 0;
 	FF_Yaw = Chassis_data_Rx.Chassis_Speed * K_FF;
 	if(GimbalCtrl == gAim && DeviceState.PC_State == 1 && ReceiveVisionData.data.dis > 0.1f){
 		PID_Calc(&Gimbal_Place_pid_Pitch[AIM],IMU.Angle_Pitch,Gimbal.Ref[PITCH]);
@@ -205,11 +228,14 @@ void Gimbal_Calc(){
 				
 		PID_Calc(&Gimbal_Place_pid_Yaw[AIM],IMU.Angle_Yawcontinuous,Gimbal.Ref[YAW]);
 		PID_Calc(&Gimbal_Speed_pid_Yaw[AIM],IMU.Gyro_Yaw,Gimbal_Place_pid_Yaw[AIM].Output + ReceiveVisionData.data.Ref_Vyaw + FF_Yaw);		
+
+		PID_Calc(&Gimbal_Place_pid_UnderP[GYRO],UnderPitch.Angle_DEG,Gimbal.Ref[UnderP]);
+		PID_Calc(&Gimbal_Speed_pid_UnderP[GYRO],UnderPitch.Speed,Gimbal_Place_pid_UnderP[GYRO].Output);							
 	} else {
 		if(goal_flag == 1){
 			PID_Calc(&Gimbal_Place_pid_Yaw[MECH],GimYaw.Angle_DEG,Gimbal.Ref[YAW]);
 			PID_Calc(&Gimbal_Speed_pid_Yaw[MECH],GimYaw.Speed,Gimbal_Place_pid_Yaw[MECH].Output);
-			if(Gimbal.Ref[YAW] - GimYaw.Angle_DEG < 2.0f){
+			if(Gimbal.Ref[YAW] - GimYaw.Angle_DEG < 4.0f){
 				PID_Calc(&Gimbal_Place_pid_UnderP[GYRO],UnderPitch.Angle_DEG,Gimbal.Ref[UnderP]);
 				PID_Calc(&Gimbal_Speed_pid_UnderP[GYRO],UnderPitch.Speed,Gimbal_Place_pid_UnderP[GYRO].Output);													
 			}
@@ -224,30 +250,22 @@ void Gimbal_Calc(){
 			PID_Calc(&Gimbal_Speed_pid_Pitch[GYRO],IMU.Gyro_Pitch,Gimbal_Place_pid_Pitch[GYRO].Output);		
 	}
 }
-float GimbalPitchOffset = 0;
-float KPitch = 1000.0f;
-void Gimbal_Send(){
-	if(IMU.Angle_Pitch < 15.0f && IMU.Angle_Pitch > -35.0f)
-		    GimbalPitchOffset = KPitch * cos(fabs(IMU.Angle_Pitch)*PI/180.0f);
-//		else if(ins->Pitch >= 20.0f)
-//			GimbalPitchOffset = -12000.0f * sin(fabs(ins->Pitch)*PI/180.0f);
-	else GimbalPitchOffset = 0;
-	
+void Gimbal_Send(){	
 	if(GimbalCtrl == gAim && DeviceState.PC_State == 1 && ReceiveVisionData.data.dis > 0.1f){
 		Can2Send[1] = (int16_t)(Gimbal_Speed_pid_Pitch[AIM].Output + ReceiveVisionData.data.Ref_aPitch);	
 		Can2Send[3] = (int16_t)(Gimbal_Speed_pid_Yaw[AIM].Output + ReceiveVisionData.data.Ref_aYaw);	
-	} else if(GimbalCtrl == gStop){
+	} else if (GimbalCtrl == gStop){
     Can2Send[1] = Can2Send[2] = Can2Send[3] = 0;
 	} else {
 		if(goal_flag == 1){
-			Can2Send[2] = (int16_t)(Gimbal_Speed_pid_UnderP[GYRO].Output);
 			Can2Send[3] = (int16_t)(Gimbal_Speed_pid_Yaw[MECH].Output);				
 		}else{
-			Can2Send[2] = (int16_t)(Gimbal_Speed_pid_UnderP[GYRO].Output);
 			Can2Send[3] = (int16_t)(Gimbal_Speed_pid_Yaw[GYRO].Output);		
 		}
 		Can2Send[1] = (int16_t)(Gimbal_Speed_pid_Pitch[GYRO].Output + GimbalPitchOffset);	
   }
+	Can2Send[2] = (int16_t)(Gimbal_Speed_pid_UnderP[GYRO].Output + GimbalUnderPitchOffset);
+//	Can2Send[2] = (int16_t)(GimbalUnderPitchOffset);
 #if GIMBAL_RUN
 	DM_MotorSend(&hcan2,0x3FE,Can2Send);
 	
@@ -256,17 +274,24 @@ void Gimbal_Send(){
 		else Gimbal_action.Gimbal_status.Pitch 	= 	Gimbal_offline;
 	if( DeviceState.Gimbal_State[YAW]  == Device_Online)  Gimbal_action.Gimbal_status.Yaw  = Gimbal_online;
 		else Gimbal_action.Gimbal_status.Yaw 	= 	Gimbal_offline; 
+	if( DeviceState.Gimbal_State[UnderP]  == Device_Online)  Gimbal_action.Gimbal_status.UnderPitch  = Gimbal_online;
+		else Gimbal_action.Gimbal_status.UnderPitch = Gimbal_offline;
+	
+	Gimbal_data.vision_distance = ReceiveVisionData.data.dis;
+	Gimbal_data.Pitch_angle = IMU.Angle_Pitch;
+	Gimbal_data.UnderPitch_angle = UnderPitch.Angle_DEG + 176;
 }
 /* 云台归中函数 */
 void MedianInit(){
+	//UnderPitch Yaw Pitch
   static float Expect_UnderPitchInit = 0;
-	static float Expect_PitchInit = 0;
   static float Expect_YawInit = 0;
+	static float Expect_PitchInit = 0;
   uint16_t Expect_UnderPitchRamp = UnderPitch.MchanicalAngle;
-  uint16_t Expect_PitchRamp = GimPitch.MchanicalAngle;
   uint16_t Expect_YawRamp   = GimYaw.MchanicalAngle;
+  uint16_t Expect_PitchRamp = GimPitch.MchanicalAngle;
 	/* 获得归中位置 */
-	if(Time.GimbalInit < 100){
+	if(Time.GimbalInit < 100){ 
 #if   Yaw_Mid_Right < Yaw_Mid_Left
         if ( (GimYaw.MchanicalAngle <= Yaw_Mid_Left) && (GimYaw.MchanicalAngle >= Yaw_Mid_Right) )
 #elif Yaw_Mid_Right > Yaw_Mid_Left

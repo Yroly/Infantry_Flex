@@ -74,8 +74,21 @@ typedef struct{
 		uint8_t quanta;
 	} __PACKED data;
 	uint8_t eof; // 0xA5
-}__PACKED SendDataTally_t;
-
+}__PACKED SendTallyData_t;
+/*------------- Quanta -------------*/
+typedef struct{
+	FrameHeader_t header;
+	uint32_t time_stamp;
+	struct{
+		// 0: 未开启跟随 1: 开启跟随
+		uint8_t following;
+		// 0: 未开启开符模式 1: 开启开符模式
+		uint8_t power_rune;
+		// 0: 未开启 Quanta 图传 1: 开启 Quanta 图传
+		uint8_t quanta;
+	} __PACKED data;
+	uint8_t eof; // 0xA5
+}__PACKED SendQuantaData_t;
 extern void usb_task();
 
 #endif /* USB_TASK_H */

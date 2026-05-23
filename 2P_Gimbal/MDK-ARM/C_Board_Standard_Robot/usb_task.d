@@ -63,7 +63,8 @@ c_board_standard_robot/usb_task.o: ..\Agency\USB\USB_Task.c \
   ..\Components\Algorithm\QuaternionEKF.h ..\Components\kalman_filter.h \
   ..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h \
   ..\Components\Algorithm\Include\arm_math.h \
-  ..\gimbal_ws\middlewares\motor\dm_motor.h ..\Inc\usb_device.h \
+  ..\gimbal_ws\middlewares\motor\dm_motor.h \
+  ..\gimbal_ws\middlewares\VT03\VT03.h ..\Inc\usb_device.h \
   ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_def.h \
   ..\Inc\usbd_conf.h C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h \
   ..\Inc\usbd_cdc_if.h \
@@ -72,4 +73,5 @@ c_board_standard_robot/usb_task.o: ..\Agency\USB\USB_Task.c \
   ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_def.h \
   ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_core.h \
   ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ioreq.h \
-  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h
+  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h \
+  ..\Agency\Gimbal\Gimbal.h ..\Components\Function.h
